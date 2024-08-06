@@ -1,0 +1,31 @@
+// Documentation URL - https://www.dbml.org/docs/
+// Editor: https://dbdiagram.io/d
+
+Table Admins {
+  id ObjectId [pk]
+  username String [unique]
+  name String [not null]
+  email String [unique]
+  passwordHash String
+  bookings Booking
+}
+
+Table Booking {
+  id ObjectId [pk]
+  guestName String
+  guestPhone String
+  guestEmail String
+  booking_date String
+  startTime String
+  endTime String
+  sport String
+  attendees Number
+  status Boolean
+  admin_id ObjectId [ref: > Admins.id]
+  indexes {
+    (booking_date)
+    (booking_date, startTime) [unique]
+  }
+}
+
+Ref: "Admins"."bookings" < "Booking"."admin_id"
